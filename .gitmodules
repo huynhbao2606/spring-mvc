@@ -1,0 +1,3 @@
+[submodule "spring-mvc"]
+	path = spring-mvc
+	url = https://github.com/huynhbao2606/spring-mvc.git
