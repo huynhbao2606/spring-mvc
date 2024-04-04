@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <body>
+
+<!--Header-->
+        <div class="d-flex align-items-center bg-dark py-3" layout:fragment="header">
+            <h4 class="mb-0">Huynh</h4>
+            <h4 class="fw-bold mb-0 ms-2">Bao</h4>
+        </div>
+
+        <div class="col-12 col-sm-3 col-xl-2 bg-dark text-white py-3 d-flex flex-column" layout:fragment="sidebar">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                <svg class="bi bi-bootstrap-fill" width="40" height="32"></svg>
+                <span class="fs-4 ps-2">Administrator</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item py-1">
+                    <a th:href="@{/customer/list}"  class="nav-link active text-white" aria-current="page">
+                        Customer
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a href="#" class="nav-link text-white">
+                        <svg class="bi bi-speedometer2" width="16" height="16"></svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a href="#" class="nav-link text-white">
+                        <svg class="bi bi-table" width="16" height="16"></svg>
+                        Orders
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a href="#" class="nav-link text-white">
+                        <svg class="bi bi-grid-3x3-gap-fill" width="16" height="16"></svg>
+                        Products
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a href="#" class="nav-link text-white">
+                        <svg class="bi bi-people-fill" width="16" height="16"></svg>
+                        Customers
+                    </a>
+                </li>
+            </ul>
+            <div class="dropdown mt-auto">
+                <hr>
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong class="ps-2">mdo</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                    <!-- dropdown items here -->
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <!-- Add a padding at the start of the text -->
+                        <strong class="ps-2">mdo</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="row bg-dark py-3 bg-dark" layout:fragment="footer">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                </a>
+                <span class="mb-3 mb-md-0 text-body-secondary">2024 Huynh-Bao</span>
+            </div>
+        </footer>
+
+    </body>
+
+</html>
