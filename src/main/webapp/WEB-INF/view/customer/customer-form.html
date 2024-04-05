@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Save Customer</title>
 </head>
 <body>
+<main class="row flex-grow-1 p-4 d-flex align-items-center" layout:fragment="content">
+    <div class="mt-0" style="width: 60%;">
 
+        <h3 class="text-center fw-bold mb-4" th:text="${customer.id}
+            ? 'Edit Customer' : 'Add Customer'"></h3>
+
+        <form th:action="@{/customer/save}" th:object="${customer}" method="post"
+              class="d-flex flex-column align-items-center">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="mb-3 w-50">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" id="firstName" name="firstName" class="form-control"
+                       placeholder="Enter first name"
+                       th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid' : ''"
+                       th:field="*{firstName}">
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                      class="invalid-feedback">
+                </span>
+            </div>
+
+            <div class="mb-3 w-50">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" id="lastName" name="lastName" class="form-control"
+                       placeholder="Enter last name"
+                       th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : ''"
+                       th:field="*{lastName}">
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                      class="invalid-feedback">
+                </span>
+            </div>
+
+            <div class="mb-3 w-50">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control"
+                       placeholder="Enter email"
+                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                       th:field="*{email}">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                      class="invalid-feedback">
+                </span>
+            </div>
+
+            <div class="mb-3 w-50 d-flex justify-content-between">
+                <button type="submit"
+                        class="btn btn-primary w-100 me-2">Save Customer</button>
+                <button type="button" onclick="history.back()"
+                        class="btn btn-danger w-100 ms-2">Canncel</button>
+            </div>
+
+        </form>
+    </div>
+</main>
 </body>
 </html>

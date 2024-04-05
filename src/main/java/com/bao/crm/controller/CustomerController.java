@@ -69,7 +69,7 @@ public class CustomerController {
         Customer existingCustomer = customerService.getCustomerByEmail(customer.getEmail());
 
         if (existingCustomer != null && existingCustomer.getId() != customer.getId()) {
-            bindingResult.rejectValue("email", "error.customer", "Email already exists!");
+            bindingResult.rejectValue("email", "error.email", "Email already exists!");
             model.addAttribute("customer", customer);
             return "customer/customer-form";
         }

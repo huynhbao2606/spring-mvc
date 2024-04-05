@@ -1,84 +1,68 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
     <body>
 
-<!--Header-->
-        <div class="d-flex align-items-center bg-dark py-3" layout:fragment="header">
-            <h4 class="mb-0">Huynh</h4>
-            <h4 class="fw-bold mb-0 ms-2">Bao</h4>
+        <!-- Header -->
+        <div class="bg-primary py-3" layout:fragment="header">
+            <a th:href="@{/customer/list}" class="text-decoration-none text-white d-flex align-items-center">
+                <h4 class="fa-brands fa-artstation text-warning mb-1 me-2"></h4>
+                <h5 class="mb-0 me-2">Huynh</h5>
+                <h5 class="fw-bold mb-0">Bao</h5>
+            </a>
         </div>
 
-        <div class="col-12 col-sm-3 col-xl-2 bg-dark text-white py-3 d-flex flex-column" layout:fragment="sidebar">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-                <svg class="bi bi-bootstrap-fill" width="40" height="32"></svg>
+        <!-- Sidebar -->
+        <div class="col-12 col-sm-3 col-xl-2 bg-dark py-3 px-0 d-flex flex-column border-secondary border-end" layout:fragment="sidebar">
+            <a th:href="@{/customer/list}" class="d-flex align-items-center mb-3 mb-md-0 text-light px-5 text-decoration-none">
+                <h3 class="fa-solid fa-user-tie text-light"></h3>
                 <span class="fs-4 ps-2">Administrator</span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item py-1">
-                    <a th:href="@{/customer/list}"  class="nav-link active text-white" aria-current="page">
-                        Customer
+                <li class="py-1">
+                    <a th:href="@{/customer/list}" class="nav-link text-light">
+                        <i class="fa-solid fa-house me-2"></i>
+                        Home
                     </a>
                 </li>
                 <li class="py-1">
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi bi-speedometer2" width="16" height="16"></svg>
+                    <a href="" class="nav-link text-light">
+                        <i class="fa-solid fa-table-columns me-2"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="py-1">
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi bi-table" width="16" height="16"></svg>
-                        Orders
-                    </a>
-                </li>
-                <li class="py-1">
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi bi-grid-3x3-gap-fill" width="16" height="16"></svg>
-                        Products
-                    </a>
-                </li>
-                <li class="py-1">
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi bi-people-fill" width="16" height="16"></svg>
+                    <a th:href="@{/customer/list}"
+                       th:class="${currentUrl.contains('/customer/') ? 'nav-link active' : 'nav-link'} "
+                       class="nav-link text-light" aria-current="page">
+                        <i class="fa-solid fa-user me-2"></i>
                         Customers
                     </a>
                 </li>
             </ul>
             <div class="dropdown mt-auto">
                 <hr>
-                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="d-flex align-items-center text-light dropdown-toggle text-decoration-none px-2"
+                   id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong class="ps-2">mdo</strong>
+                    <strong>Huynh Bao</strong>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <!-- dropdown items here -->
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <!-- Add a padding at the start of the text -->
-                        <strong class="ps-2">mdo</strong>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
+                    <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
                 </ul>
             </div>
         </div>
 
-        <footer class="row bg-dark py-3 bg-dark" layout:fragment="footer">
+        <!-- Footer -->
+        <footer class="row bg-primary py-3" layout:fragment="footer">
             <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                </a>
-                <span class="mb-3 mb-md-0 text-body-secondary">2024 Huynh-Bao</span>
+                <span class="text-light">2024 Huynh-Bao</span>
             </div>
         </footer>
-
     </body>
-
 </html>
