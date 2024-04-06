@@ -1,6 +1,7 @@
 package com.bao.crm.dao.Impl;
 
 import com.bao.crm.dao.CustomerDAO;
+import com.bao.crm.dto.CustomerParams;
 import com.bao.crm.entity.Customer;
 
 import org.hibernate.Query;
@@ -20,7 +21,9 @@ public class CustomerDAOIml implements CustomerDAO {
     }
 
     @Override
-    public List<Customer> getCustomers(String search) {
+    public List<Customer> getCustomers(CustomerParams params) {
+        String search = params.getSearch();
+        String sort = params.getSort();
         Session session = sessionFactory.getCurrentSession();
         Query<Customer> query = null;
 

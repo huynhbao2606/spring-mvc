@@ -7,7 +7,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Ebook</title>
         <script src="https://kit.fontawesome.com/1e7fe5f742.js" crossorigin="anonymous"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
         <link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
         <link th:href="@{/resources/css/style.css}" rel="stylesheet">
     </head>
@@ -35,8 +35,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         <script th:if="${success}" th:inline="javascript">
             const success = /*[[${success}]]*/ 'default';
             Swal.fire({
+                title: "Succssed!!",
+                text: success,
                 icon: "success",
-                title: success,
                 showConfirmButton: false,
                 timer: 1500
             });
