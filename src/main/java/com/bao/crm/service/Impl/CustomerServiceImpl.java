@@ -1,6 +1,7 @@
 package com.bao.crm.service.Impl;
 
 import com.bao.crm.dao.CustomerDAO;
+import com.bao.crm.dto.CustomerParams;
 import com.bao.crm.entity.Customer;
 import com.bao.crm.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public List<Customer> getCustomers(String search) {
-        return customerDAO.getCustomers(search);
+    public List<Customer> getCustomers(CustomerParams params) {
+        return customerDAO.getCustomers(params);
     }
 
     @Override
@@ -48,5 +49,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public void deleteCustomer(int id) {
         customerDAO.deleteCustomer(id);
+    }
+
+    @Override
+    @Transactional
+    public int getCustomerCount(CustomerParams params) {
+        return customerDAO.getCustomerCount(params);
     }
 }

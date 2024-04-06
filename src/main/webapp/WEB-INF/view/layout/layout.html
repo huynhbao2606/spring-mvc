@@ -4,25 +4,26 @@
     <body>
 
         <!-- Header -->
-        <div class="bg-primary py-3" layout:fragment="header">
+        <div class="bg-primary pt-1 pb-2" layout:fragment="header">
             <a th:href="@{/customer/list}" class="text-decoration-none text-white d-flex align-items-center">
-                <h4 class="fa-brands fa-artstation text-warning mb-1 me-2"></h4>
-                <h5 class="mb-0 me-2">Huynh</h5>
-                <h5 class="fw-bold mb-0">Bao</h5>
+                <h4 class="fa-brands fa-artstation text-warning mt-1 mb-1 me-2"></h4>
+                <h5 class="mb-0 me-1">Huỳnh</h5>
+                <h5 class="fw-bold mb-0">Bảo</h5>
             </a>
         </div>
 
         <!-- Sidebar -->
-        <div class="col-12 col-sm-3 col-xl-2 bg-dark py-3 px-0 d-flex flex-column border-secondary border-end" layout:fragment="sidebar">
-            <a th:href="@{/customer/list}" class="d-flex align-items-center mb-3 mb-md-0 text-light px-5 text-decoration-none icon-link-hover">
+        <div class="col-12 col-sm-3 col-xl-2 bg-dark py-3 pb-1 px-0 d-flex flex-column border-secondary border-end" layout:fragment="sidebar">
+            <a th:href="@{/customer/list}" class="d-flex align-items-center mb-3 mb-md-0 text-warning px-5 text-decoration-none">
                 <h3 class="fa-solid fa-user-tie text-light"></h3>
                 <span class="fs-5 ps-2">Administrator</span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="py-1">
-                    <a th:href="@{/customer/list}" class="nav-link text-light">
-                        <i class="fa-solid fa-house me-2"></i>
+                    <a href=""
+                       class="nav-link text-light" aria-current="page">
+                        <i class="fa-solid fa-user me-2"></i>
                         Home
                     </a>
                 </li>
@@ -41,7 +42,7 @@
                     </a>
                 </li>
             </ul>
-            <div class="dropdown mt-auto">
+            <div class="dropdown mt-auto ">
                 <hr>
                 <a href="#" class="d-flex align-items-center text-light dropdown-toggle text-decoration-none px-2"
                    id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">

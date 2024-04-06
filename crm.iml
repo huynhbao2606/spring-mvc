@@ -13,7 +13,7 @@
             <entry key="rebelXmlGenerationType" value="ide" />
           </map>
         </option>
-        <option name="version" value="39" />
+        <option name="version" value="47" />
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">

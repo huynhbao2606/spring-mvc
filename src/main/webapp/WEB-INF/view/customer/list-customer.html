@@ -9,16 +9,17 @@
 <body>
 <main class="row flex-grow-1 p-4" layout:fragment="content">
     <h3 class="text-center fw-bold">Customer Manager</h3>
-    <div class="flex-grow-1 pt-3">
+    <div class="flex-grow-1">
         <div class="row">
             <div class="col-6 d-flex flex-column align-items-start">
-                <form class="d-flex" method="get" th:object="${customer}">
-                    <input name="search" class="form-control
-                    rounded-0
-                    rounded-start" type="search" placeholder="Search for name...." />
-                    <button class="btn btn-secondary
-                    rounded-0
-                    rounded-end" type="submit">Search</button>
+                <form class="d-flex" method="get" th:object="${customerParams}">
+                    <div class="me-2 d-flex align-items-center">
+                        <input name="search" class="form-control rounded-0 rounded-start"
+                               type="search" placeholder="Search for name...."
+                               th:field="*{search}" />
+                        <button class="btn btn-secondary rounded-0 rounded-end me-1" type="submit">Search</button>
+                        <a th:if="${customerParams.search != null and !customerParams.search.isEmpty()}" th:href="@{/customer/list}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
                 </form>
             </div>
             <div class="col-6 d-flex flex-column align-items-end">
@@ -28,13 +29,40 @@
                 </a>
             </div>
         </div>
-        <div class="table-responsive py-3">
+        <div class="table-responsive pt-4">
             <table class="table table-secondary table-striped table-hover">
                 <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
+                <tr class="fst-italic">
+                    <th>
+                        <a class="text-decoration-none"
+                           th:classappend="${customerParams.sort == 'firstNameAsc' || customerParams.sort == 'firstNameDesc' ? 'text-light' : 'text-white'}"
+                           th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search}, sort=${customerParams.sort == 'firstNameAsc' ? 'firstNameDesc' : 'firstNameAsc'})}">
+                            FirstName
+                            <i class="fa-solid fa-sort-down" th:if="${customerParams.sort == 'firstNameAsc'}"></i>
+                            <i class="fa-solid fa-sort-up" th:if="${customerParams.sort == 'firstNameDesc'}"></i>
+                            <i class="fa-solid fa-sort" th:if="${customerParams.sort == null}"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-decoration-none"
+                           th:classappend="${customerParams.sort == 'lastNameAsc' || customerParams.sort == 'lastNameDesc' ? 'text-light' : 'text-white'}"
+                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search}, sort=${customerParams.sort == 'lastNameAsc' ? 'lastNameDesc' : 'lastNameAsc'})}">
+                            LastName
+                            <i class="fa-solid fa-sort-down" th:if="${customerParams.sort == 'lastNameAsc'}"></i>
+                            <i class="fa-solid fa-sort-up" th:if="${customerParams.sort == 'lastNameDesc'}"></i>
+                            <i class="fa-solid fa-sort" th:if="${customerParams.sort == null}"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-decoration-none"
+                           th:classappend="${customerParams.sort == 'emailAsc' || customerParams.sort == 'emailDesc' ? 'text-light' : 'text-white'}"
+                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search}, sort=${customerParams.sort == 'emailAsc' ? 'emailDesc' : 'emailAsc'})}">
+                            Email
+                            <i class="fa-solid fa-sort-down" th:if="${customerParams.sort == 'emailAsc'}"></i>
+                            <i class="fa-solid fa-sort-up" th:if="${customerParams.sort == 'emailDesc'}"></i>
+                            <i class="fa-solid fa-sort" th:if="${customerParams.sort == null}"></i>
+                        </a>
+                    </th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -54,6 +82,32 @@
                 </tr>
                 </tbody>
             </table>
+            <nav th:if="${totalPages > 1}" aria-label="navigation">
+                <div class="row d-flex me-0">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-start">
+                            Page&nbsp;
+                            <div th:text="${customerParams.pageNumber}"></div>
+                            &nbsp;Of&nbsp;
+                            <div th:text="${totalPages}"></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item" th:classappend="${customerParams.pageNumber == 1} ? 'disabled'">
+                                <a class="page-link" th:href="@{list(pageNumber=${customerParams.pageNumber - 1},sort=${customerParams.sort},search=${customerParams.search})}">Previous</a>
+                            </li>
+                            <li class="page-item" th:classappend="${customerParams.pageNumber == i} ? 'active'" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                <a class="page-link" th:href="@{list(pageNumber=${i},sort=${customerParams.sort},search=${customerParams.search})}"
+                                   th:text="${i}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${customerParams.pageNumber == totalPages} ? 'disabled'">
+                                <a class="page-link" th:href="@{list(pageNumber=${customerParams.pageNumber + 1},sort=${customerParams.sort},search=${customerParams.search})}">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         </div>
     </div>
     <form id="deleteForm" method="post"></form>

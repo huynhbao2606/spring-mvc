@@ -13,6 +13,6 @@ body {
 }
 
 .row.flex-grow-1 {
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 100px);
 }
 

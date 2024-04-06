@@ -1,5 +1,6 @@
 package com.bao.crm.controller;
 
+import com.bao.crm.dto.CustomerParams;
 import com.bao.crm.entity.Customer;
 import com.bao.crm.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,14 @@ public class CustomerController {
     }
 
     @RequestMapping("/list")
-    public String listCustomers(@RequestParam(value = "search", required = false)  String search, Model model ){
-        List<Customer> customers = customerService.getCustomers(search);
+    public String listCustomers(CustomerParams params, Model model ){
+        List<Customer> customers = customerService.getCustomers(params);
+        model.addAttribute("customerParams", params);
         model.addAttribute("customers", customers);
+        int customersCount = customerService.getCustomerCount(params);
+        int totalPages = (int) Math.ceil((double) customersCount / params.getPageSize());
+        model.addAttribute("totalCount", customersCount);
+        model.addAttribute("totalPages", totalPages);
         return "customer/list-customer";
     }
 
