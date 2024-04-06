@@ -9,10 +9,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CustomerDAOIml implements CustomerDAO {
+public class CustomerDAOIml implements CustomerDAO{
 
     public final SessionFactory  sessionFactory;
 
@@ -24,20 +29,52 @@ public class CustomerDAOIml implements CustomerDAO {
     public List<Customer> getCustomers(CustomerParams params) {
         String search = params.getSearch();
         String sort = params.getSort();
-        Session session = sessionFactory.getCurrentSession();
-        Query<Customer> query = null;
 
-        if (search != null && !search.trim().isEmpty()) {
-            query = session.createQuery("from Customer where lower(firstName) like :theName "
-                    + "or lower(lastName) like :theName", Customer.class);
-            query.setParameter("theName", "%" + search.toLowerCase() + "%");
-        } else {
-            query = session.createQuery("from Customer", Customer.class);
+        CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
+        Root<Customer> root = query.from(Customer.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if(search != null && !search.trim().isEmpty()){
+            predicates.add(builder.or(
+                    builder.like(builder.lower(root.get("firstName")), "%" + search.toLowerCase() + "%"),
+                    builder.like(builder.lower(root.get("lastName")), "%" + search.toLowerCase() + "%"),
+                    builder.like(builder.lower(root.get("email")), "%" + search.toLowerCase() + "%")
+            ));
         }
 
-        List<Customer> customers = query.getResultList();
+        query.where(predicates.toArray(new Predicate[0]));
 
-        return customers;
+        if (sort != null && !sort.isEmpty()) {
+            switch (sort) {
+                case "firstNameAsc":
+                    query.orderBy(builder.asc(root.get("firstName")));
+                    break;
+                case "firstNameDesc":
+                    query.orderBy(builder.desc(root.get("firstName")));
+                    break;
+                case "lastNameAsc":
+                    query.orderBy(builder.asc(root.get("lastName")));
+                    break;
+                case "lastNameDesc":
+                    query.orderBy(builder.desc(root.get("lastName")));
+                    break;
+                case "emailAsc":
+                    query.orderBy(builder.asc(root.get("email")));
+                    break;
+                case "emailDesc":
+                    query.orderBy(builder.desc(root.get("email")));
+                    break;
+                default:
+                    query.orderBy(builder.asc(root.get("id")));
+                    break;
+            }
+        }
+
+        return sessionFactory.getCurrentSession().
+                createQuery(query).
+                getResultList();
     }
 
     @Override
