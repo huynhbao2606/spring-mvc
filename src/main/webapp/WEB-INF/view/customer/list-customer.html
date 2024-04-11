@@ -110,7 +110,6 @@
             </nav>
         </div>
     </div>
-    <form id="deleteForm" method="post"></form>
 </main>
 </body>
 <script layout:fragment="myScript" th:inline="javascript">
@@ -125,18 +124,25 @@
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your customer has been deleted.",
-                    icon: "success",
-                    showConfirmButton: false,
-                });
-                setTimeout(function () {
-                    const url = /*[[@{/customer/delete/}]]*/ "";
-                    const deleteForm = document.getElementById("deleteForm");
-                    deleteForm.action = url + id;
-                    deleteForm.submit();
-                }, 1000);
+                const url = /*[[@{/customer/delete/}]]*/ "";
+                $.ajax({
+                    type : "POST",
+                    url : url + id,
+                    contentType: "application/json",
+                    dataType : 'json',
+                    success: function () {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your customer has been deleted.",
+                            icon: "success",
+                            showConfirmButton: true,
+                        });
+                        console.log("XoaTanhCong");
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                })
             }
         });
     }
