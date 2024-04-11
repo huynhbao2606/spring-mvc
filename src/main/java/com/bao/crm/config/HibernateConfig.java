@@ -43,8 +43,8 @@ public class HibernateConfig implements WebMvcConfigurer{
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/view/");
         templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
         return templateResolver;
     }
 
@@ -76,7 +76,7 @@ public class HibernateConfig implements WebMvcConfigurer{
         poolDataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
         poolDataSource.setUser("root");
         poolDataSource.setPassword("Huynhbao2606");
-        poolDataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/c2202l_spring_crm?useSSL=false");
+        poolDataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/c2202l_spring_crm?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
         return poolDataSource;
     }
 
@@ -95,7 +95,6 @@ public class HibernateConfig implements WebMvcConfigurer{
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
-
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
