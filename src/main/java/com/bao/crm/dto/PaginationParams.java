@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CustomerParams extends PaginationParams{
-    String search;
-    String sort;
+public class PaginationParams {
+    int pageNumber = 1;
+    int pageSize = 10;
 }

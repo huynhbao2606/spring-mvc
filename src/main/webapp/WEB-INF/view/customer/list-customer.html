@@ -33,37 +33,40 @@
             <table class="table table-secondary table-striped table-hover">
                 <thead>
                 <tr class="fst-italic">
-                    <th>
+                    <th class="w-25">
                         <a class="text-decoration-none"
                            th:classappend="${customerParams.sort == 'firstNameAsc' || customerParams.sort == 'firstNameDesc' ? 'text-light' : 'text-white'}"
-                           th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search}, sort=${customerParams.sort == 'firstNameAsc' ? 'firstNameDesc' : 'firstNameAsc'})}">
+                           th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
+                           sort=${customerParams.sort == 'firstNameAsc' ? 'firstNameDesc' :
+                           (customerParams.sort == 'firstNameDesc' ? '' : 'firstNameAsc')})}">
                             FirstName
-                            <i class="fa-solid fa-sort-down" th:if="${customerParams.sort == 'firstNameAsc'}"></i>
-                            <i class="fa-solid fa-sort-up" th:if="${customerParams.sort == 'firstNameDesc'}"></i>
-                            <i class="fa-solid fa-sort" th:if="${customerParams.sort == null}"></i>
+                            <i class="fa-solid" th:classappend="${customerParams.sort == 'firstNameAsc' ? 'fa-sort-down' :
+                            (customerParams.sort == 'firstNameDesc' ? 'fa-sort-up' : 'fa-sort')}"></i>
                         </a>
                     </th>
-                    <th>
+                    <th class="w-25">
                         <a class="text-decoration-none"
                            th:classappend="${customerParams.sort == 'lastNameAsc' || customerParams.sort == 'lastNameDesc' ? 'text-light' : 'text-white'}"
-                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search}, sort=${customerParams.sort == 'lastNameAsc' ? 'lastNameDesc' : 'lastNameAsc'})}">
+                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
+                           sort=${customerParams.sort == 'lastNameAsc' ? 'lastNameDesc' :
+                           (customerParams.sort == 'lastNameDesc' ? '' : 'lastNameAsc')})}">
                             LastName
-                            <i class="fa-solid fa-sort-down" th:if="${customerParams.sort == 'lastNameAsc'}"></i>
-                            <i class="fa-solid fa-sort-up" th:if="${customerParams.sort == 'lastNameDesc'}"></i>
-                            <i class="fa-solid fa-sort" th:if="${customerParams.sort == null}"></i>
+                            <i class="fa-solid" th:classappend="${customerParams.sort == 'lastNameAsc' ? 'fa-sort-down' :
+                            (customerParams.sort == 'lastNameDesc' ? 'fa-sort-up' : 'fa-sort')}"></i>
                         </a>
                     </th>
-                    <th>
+                    <th class="w-25">
                         <a class="text-decoration-none"
                            th:classappend="${customerParams.sort == 'emailAsc' || customerParams.sort == 'emailDesc' ? 'text-light' : 'text-white'}"
-                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search}, sort=${customerParams.sort == 'emailAsc' ? 'emailDesc' : 'emailAsc'})}">
+                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
+                           sort=${customerParams.sort == 'emailAsc' ? 'emailDesc' :
+                           (customerParams.sort == 'emailDesc' ? '' : 'emailAsc')})}">
                             Email
-                            <i class="fa-solid fa-sort-down" th:if="${customerParams.sort == 'emailAsc'}"></i>
-                            <i class="fa-solid fa-sort-up" th:if="${customerParams.sort == 'emailDesc'}"></i>
-                            <i class="fa-solid fa-sort" th:if="${customerParams.sort == null}"></i>
+                            <i class="fa-solid" th:classappend="${customerParams.sort == 'emailAsc' ? 'fa-sort-down' :
+                            (customerParams.sort == 'emailDesc' ? 'fa-sort-up' : 'fa-sort')}"></i>
                         </a>
                     </th>
-                    <th>Actions</th>
+                    <th class="w-25">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
