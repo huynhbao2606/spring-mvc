@@ -1,4 +1,4 @@
-package com.bao.crm.controller;
+package com.bao.crm.controller.admin;
 
 import com.bao.crm.dto.CustomerParams;
 import com.bao.crm.entity.Customer;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/admin/customer")
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -58,7 +58,7 @@ public class CustomerController {
     @PostMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable int id) {
         customerService.deleteCustomer(id);
-        return "redirect:/customer/list";
+        return "redirect:/admin/customer/list";
     }
 
     @PostMapping("/save")
@@ -88,6 +88,6 @@ public class CustomerController {
 
         customerService.saveCustomer(customer);
 
-        return "redirect:/customer/list";
+        return "redirect:/admin/customer/list";
     }
 }

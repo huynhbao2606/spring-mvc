@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
 <head>
     <meta charset="UTF-8">
     <title>Save Customer</title>
@@ -11,7 +13,7 @@
         <h3 class="text-center fw-bold mb-4" th:text="${customer.id}
             ? 'Edit Customer' : 'Add Customer'"></h3>
 
-        <form th:action="@{/customer/save}" th:object="${customer}" method="post"
+        <form th:action="@{/admin/customer/save}" th:object="${customer}" method="post"
               class="d-flex flex-column align-items-center">
 
             <input type="hidden" th:field="*{id}">

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/main}">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +19,7 @@
                                type="search" placeholder="Search for name...."
                                th:field="*{search}" />
                         <button class="btn btn-secondary rounded-0 rounded-end me-1" type="submit">Search</button>
-                        <a th:if="${customerParams.search != null and !customerParams.search.isEmpty()}" th:href="@{/customer/list}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i></a>
+                        <a th:if="${customerParams.search != null and !customerParams.search.isEmpty()}" th:href="@{list}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                 </form>
             </div>
@@ -47,7 +48,7 @@
                     <th class="w-25">
                         <a class="text-decoration-none"
                            th:classappend="${customerParams.sort == 'lastNameAsc' || customerParams.sort == 'lastNameDesc' ? 'text-light' : 'text-white'}"
-                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
+                           th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
                            sort=${customerParams.sort == 'lastNameAsc' ? 'lastNameDesc' :
                            (customerParams.sort == 'lastNameDesc' ? '' : 'lastNameAsc')})}">
                             LastName
@@ -58,7 +59,7 @@
                     <th class="w-25">
                         <a class="text-decoration-none"
                            th:classappend="${customerParams.sort == 'emailAsc' || customerParams.sort == 'emailDesc' ? 'text-light' : 'text-white'}"
-                           th:href="@{/customer/list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
+                           th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
                            sort=${customerParams.sort == 'emailAsc' ? 'emailDesc' :
                            (customerParams.sort == 'emailDesc' ? '' : 'emailAsc')})}">
                             Email
@@ -75,10 +76,14 @@
                     <td th:text="${customer.lastName}"></td>
                     <td th:text="${customer.email}"></td>
                     <td>
-                        <a th:href="@{edit/{id}(id=${customer.id})}" class="btn btn-warning">
+                        <a th:href="@{edit/{id}(id=${customer.id})}"
+                           sec:authorize="hasRole('ROLE_ADMIN')"
+                           class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a th:onclick="|confirmDelete(${customer.id})|" class="btn btn-danger">
+                        <a th:onclick="|confirmDelete(${customer.id})|"
+                           sec:authorize="hasRole('ROLE_ADMIN')"
+                           class="btn btn-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
@@ -127,7 +132,7 @@
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                const url = /*[[@{/customer/delete/}]]*/ "";
+                const url = /*[[@{/admin/customer/delete/}]]*/ "";
                 $.ajax({
                     type : "POST",
                     url : url + id,
