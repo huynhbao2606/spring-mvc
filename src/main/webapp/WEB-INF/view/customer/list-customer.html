@@ -77,15 +77,28 @@
                     <td th:text="${customer.email}"></td>
                     <td>
                         <a th:href="@{edit/{id}(id=${customer.id})}"
-                           sec:authorize="hasRole('ROLE_ADMIN')"
-                           class="btn btn-warning">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                           class="btn btn-warning"
+                           sec:authorize="hasRole('ADMIN')">
+                            <i class="fa fa-edit"></i>
                         </a>
+
+                        <span class="btn btn-warning disabled"
+                              th:if="${not #authorization.expression('hasRole(''ADMIN'')')}"
+                              aria-disabled="true">
+                            <i class="fa fa-edit"></i>
+                        </span>
+
                         <a th:onclick="|confirmDelete(${customer.id})|"
                            sec:authorize="hasRole('ROLE_ADMIN')"
                            class="btn btn-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
+
+                        <span class="btn btn-danger disabled"
+                              th:if="${not #authorization.expression('hasRole(''ADMIN'')')}"
+                              aria-disabled="true">
+                            <i class="fa fa-trash"></i>
+                         </span>
                     </td>
                 </tr>
                 </tbody>
@@ -103,14 +116,16 @@
                     <div class="col-6">
                         <ul class="pagination justify-content-end mb-0">
                             <li class="page-item" th:classappend="${customerParams.pageNumber == 1} ? 'disabled'">
-                                <a class="page-link" th:href="@{list(pageNumber=${customerParams.pageNumber - 1},sort=${customerParams.sort},search=${customerParams.search})}">Previous</a>
+                                <a class="page-link" th:href="@{list(pageNumber=${customerParams.pageNumber - 1},
+                                sort=${customerParams.sort},search=${customerParams.search})}"><i class="fa-solid fa-arrow-left"></i></a>
                             </li>
                             <li class="page-item" th:classappend="${customerParams.pageNumber == i} ? 'active'" th:each="i: ${#numbers.sequence(1, totalPages)}">
                                 <a class="page-link" th:href="@{list(pageNumber=${i},sort=${customerParams.sort},search=${customerParams.search})}"
                                    th:text="${i}"></a>
                             </li>
                             <li class="page-item" th:classappend="${customerParams.pageNumber == totalPages} ? 'disabled'">
-                                <a class="page-link" th:href="@{list(pageNumber=${customerParams.pageNumber + 1},sort=${customerParams.sort},search=${customerParams.search})}">Next</a>
+                                <a class="page-link" th:href="@{list(pageNumber=${customerParams.pageNumber + 1},
+                                sort=${customerParams.sort},search=${customerParams.search})}"><i class="fa-solid fa-arrow-right"></i></a>
                             </li>
                         </ul>
                     </div>

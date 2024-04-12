@@ -21,6 +21,7 @@ a:hover {
 }
 .link {
   color: #c4c3ca;
+  text-decoration: none;
 }
 .link:hover {
   color: #ffeba7;
