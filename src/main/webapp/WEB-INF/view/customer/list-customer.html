@@ -24,10 +24,18 @@
                 </form>
             </div>
             <div class="col-6 d-flex flex-column align-items-end">
-                <a th:href="@{new}" class="btn btn-primary">
+                <a th:href="@{new}"
+                   sec:authorize="hasAuthority('ADMIN')"
+                   class="btn btn-primary">
                     <i class="fa-solid fa-plus">&nbsp;</i>
                     New Customer
                 </a>
+                <span class="btn btn-primary disabled"
+                      th:if="${not #authorization.expression('hasAuthority(''ADMIN'')')}"
+                      aria-disabled="true">
+                    <i class="fa-solid fa-plus">&nbsp;</i>
+                    New Customer
+                </span>
             </div>
         </div>
         <div class="table-responsive pt-4">
@@ -78,24 +86,24 @@
                     <td>
                         <a th:href="@{edit/{id}(id=${customer.id})}"
                            class="btn btn-warning"
-                           sec:authorize="hasRole('ADMIN')">
+                           sec:authorize="hasAuthority('ADMIN')">
                             <i class="fa fa-edit"></i>
                         </a>
 
                         <span class="btn btn-warning disabled"
-                              th:if="${not #authorization.expression('hasRole(''ADMIN'')')}"
+                              th:if="${not #authorization.expression('hasAuthority(''ADMIN'')')}"
                               aria-disabled="true">
                             <i class="fa fa-edit"></i>
                         </span>
 
                         <a th:onclick="|confirmDelete(${customer.id})|"
-                           sec:authorize="hasRole('ROLE_ADMIN')"
+                           sec:authorize="hasAuthority('ADMIN')"
                            class="btn btn-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
 
                         <span class="btn btn-danger disabled"
-                              th:if="${not #authorization.expression('hasRole(''ADMIN'')')}"
+                              th:if="${not #authorization.expression('hasAuthority(''ADMIN'')')}"
                               aria-disabled="true">
                             <i class="fa fa-trash"></i>
                          </span>
@@ -158,7 +166,8 @@
                             title: "Deleted!",
                             text: "Your customer has been deleted.",
                             icon: "success",
-                            showConfirmButton: true,
+                            showConfirmButton: false,
+                            timer: 1500
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location.reload();

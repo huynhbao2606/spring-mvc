@@ -34,16 +34,16 @@
                     </a>
                 </li>
                 <li class="py-1">
-                    <a href="" class="nav-link text-light">
-                        <i class="fa-solid fa-table-columns me-2"></i>
-                        Dashboard
+                    <a href="" class="nav-link text-light" aria-current="page">
+                        <i class="fa-solid fa-user me-2"></i>
+                        User
                     </a>
                 </li>
                 <li class="py-1">
                     <a th:href="@{/admin/customer/list}"
                        th:classappend="${currentUrl.contains('/admin/customer/') ? 'nav-link active' : 'nav-link text-light'} "
                        aria-current="page">
-                        <i class="fa-solid fa-user me-2"></i>
+                        <i class="fa-solid fa-person me-2"></i>
                         Customers
                     </a>
                 </li>

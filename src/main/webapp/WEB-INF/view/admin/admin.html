@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/main}">
@@ -10,10 +10,10 @@
 <body>
 <main class="row flex-grow-1 p-4 d-flex align-items-center" layout:fragment="content">
     <h2>Username: <span sec:authentication="name"></span></h2>
-    <div sec:authorize="hasRole('ADMIN')">
+    <div sec:authorize="hasAuthority('ADMIN')">
         <h1>Welcome, Admin!</h1>
     </div>
-    <div sec:authorize="hasRole('USER')">
+    <div sec:authorize="hasAuthority('MANAGE')">
         <h1>Welcome, User!</h1>
     </div>
 </main>
