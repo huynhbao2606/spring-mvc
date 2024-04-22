@@ -13,7 +13,7 @@
             <entry key="rebelXmlGenerationType" value="ide" />
           </map>
         </option>
-        <option name="version" value="76" />
+        <option name="version" value="81" />
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">
@@ -21,7 +21,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="crm" value="8e11fef0-a564-4911-b32b-45d3bd6810a2" />
+          <factory-entry name="crm" value="fcb07684-9e08-4b67-bd93-9f37e4241041" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

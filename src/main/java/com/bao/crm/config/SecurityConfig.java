@@ -1,7 +1,7 @@
 package com.bao.crm.config;
 
-import com.bao.crm.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 
 @Configuration
@@ -17,41 +19,45 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailService userDetailService;
+    @Qualifier("customUserDetailsService")
+    private org.springframework.security.core.userdetails.UserDetailsService customUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
+
+    @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService)
+        auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                    .antMatchers("/resources/**").permitAll()
-                    .antMatchers("/admin/**/list").hasAnyAuthority("ADMIN", "MANAGER")
-                    .antMatchers("/admin/**/new", "/admin/**/edit/**", "/admin/**/delete/**").hasAuthority("ADMIN")
-                    .antMatchers("/admin/**").hasAnyAuthority("ADMIN","MANAGER")
-                    .anyRequest().authenticated()
-                .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/admin/home", true)
-                    .failureUrl("/login?error")
-                    .permitAll()
-                .and()
-                    .logout()
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll()
-                .and()
-                    .exceptionHandling().accessDeniedPage("/access-denied");
-    }
+        http.addFilterBefore(new CharacterEncodingFilter("UTF-8"), ChannelProcessingFilter.class);
 
+        http
+                .authorizeRequests()
+                .antMatchers("/resources/**", "/auth/**", "/images/**").permitAll()
+                .antMatchers("/admin/**/list","/admin/home").hasAnyRole("MANAGE", "ADMIN")
+                .antMatchers("/admin/**/new/**","/admin/**/edit/**","/admin/**/delete/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/auth/login")
+                .defaultSuccessUrl("/admin/home", true)
+                .failureUrl("/auth/login?error")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/auth/logout")
+                .logoutSuccessUrl("/auth/login?logout")
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/auth/access-denied");
+    }
 }
 

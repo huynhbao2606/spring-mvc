@@ -5,6 +5,8 @@
       layout:decorate="~{layout/main}">
 <head>
     <meta charset="UTF-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Customer List</title>
 </head>
 <body>
@@ -25,13 +27,13 @@
             </div>
             <div class="col-6 d-flex flex-column align-items-end">
                 <a th:href="@{new}"
-                   sec:authorize="hasAuthority('ADMIN')"
+                   sec:authorize="hasRole('ADMIN')"
                    class="btn btn-primary">
                     <i class="fa-solid fa-plus">&nbsp;</i>
                     New Customer
                 </a>
                 <span class="btn btn-primary disabled"
-                      th:if="${not #authorization.expression('hasAuthority(''ADMIN'')')}"
+                      sec:authorize="!hasRole('ADMIN')"
                       aria-disabled="true">
                     <i class="fa-solid fa-plus">&nbsp;</i>
                     New Customer
@@ -41,38 +43,38 @@
         <div class="table-responsive pt-4">
             <table class="table table-secondary table-striped table-hover">
                 <thead>
-                <tr class="fst-italic">
-                    <th class="w-25">
+                <tr class="fst-italic" th:with="sortColumn = ${T(com.bao.crm.constant.SortCustomer)}">
+                    <th class="w-25" th:with="isFirstNameAsc=${#strings.equals(customerParams.sort, sortColumn.FIRST_NAME_ASC)},
+                                              isFirstNameDesc=${#strings.equals(customerParams.sort, sortColumn.FIRST_NAME_DESC)}">
                         <a class="text-decoration-none"
-                           th:classappend="${customerParams.sort == 'firstNameAsc' || customerParams.sort == 'firstNameDesc' ? 'text-light' : 'text-white'}"
+                           th:classappend="${isFirstNameAsc || isFirstNameDesc ? 'text-light' : 'text-white'}"
                            th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
-                           sort=${customerParams.sort == 'firstNameAsc' ? 'firstNameDesc' :
-                           (customerParams.sort == 'firstNameDesc' ? '' : 'firstNameAsc')})}">
+                           sort=${isFirstNameAsc ? sortColumn.FIRST_NAME_DESC : sortColumn.FIRST_NAME_ASC})}">
                             FirstName
-                            <i class="fa-solid" th:classappend="${customerParams.sort == 'firstNameAsc' ? 'fa-sort-down' :
-                            (customerParams.sort == 'firstNameDesc' ? 'fa-sort-up' : 'fa-sort')}"></i>
+                            <i class="fa-solid" th:classappend="${isFirstNameAsc ? 'fa-sort-down' :
+                            (isFirstNameDesc ? 'fa-sort-up' : 'fa-sort')}"></i>
                         </a>
                     </th>
-                    <th class="w-25">
+                    <th class="w-25" th:with="isLastNameAsc=${#strings.equals(customerParams.sort, sortColumn.LAST_NAME_ASC)},
+                                              isLastNameDesc=${#strings.equals(customerParams.sort, sortColumn.LAST_NAME_DESC)}">
                         <a class="text-decoration-none"
-                           th:classappend="${customerParams.sort == 'lastNameAsc' || customerParams.sort == 'lastNameDesc' ? 'text-light' : 'text-white'}"
+                           th:classappend="${isLastNameAsc || isLastNameDesc ? 'text-light' : 'text-white'}"
                            th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
-                           sort=${customerParams.sort == 'lastNameAsc' ? 'lastNameDesc' :
-                           (customerParams.sort == 'lastNameDesc' ? '' : 'lastNameAsc')})}">
+                           sort=${isLastNameAsc ? sortColumn.LAST_NAME_DESC : sortColumn.LAST_NAME_ASC})}">
                             LastName
-                            <i class="fa-solid" th:classappend="${customerParams.sort == 'lastNameAsc' ? 'fa-sort-down' :
-                            (customerParams.sort == 'lastNameDesc' ? 'fa-sort-up' : 'fa-sort')}"></i>
+                            <i class="fa-solid" th:classappend="${isLastNameAsc ? 'fa-sort-down' :
+                            (isLastNameDesc ? 'fa-sort-up' : 'fa-sort')}"></i>
                         </a>
                     </th>
-                    <th class="w-25">
+                    <th class="w-25" th:with="isEmailAsc=${#strings.equals(customerParams.sort, sortColumn.EMAIL_ASC)},
+                                              isEmailDesc=${#strings.equals(customerParams.sort, sortColumn.EMAIL_DESC)}">
                         <a class="text-decoration-none"
-                           th:classappend="${customerParams.sort == 'emailAsc' || customerParams.sort == 'emailDesc' ? 'text-light' : 'text-white'}"
+                           th:classappend="${isEmailAsc || isEmailDesc ? 'text-light' : 'text-white'}"
                            th:href="@{list(pageNumber=${customerParams.pageNumber}, search=${customerParams.search},
-                           sort=${customerParams.sort == 'emailAsc' ? 'emailDesc' :
-                           (customerParams.sort == 'emailDesc' ? '' : 'emailAsc')})}">
+                           sort=${isEmailAsc ? sortColumn.EMAIL_DESC : sortColumn.EMAIL_ASC})}">
                             Email
-                            <i class="fa-solid" th:classappend="${customerParams.sort == 'emailAsc' ? 'fa-sort-down' :
-                            (customerParams.sort == 'emailDesc' ? 'fa-sort-up' : 'fa-sort')}"></i>
+                            <i class="fa-solid" th:classappend="${isEmailAsc ? 'fa-sort-down' :
+                            (isEmailDesc ? 'fa-sort-up' : 'fa-sort')}"></i>
                         </a>
                     </th>
                     <th class="w-25">Actions</th>
@@ -85,25 +87,25 @@
                     <td th:text="${customer.email}"></td>
                     <td>
                         <a th:href="@{edit/{id}(id=${customer.id})}"
-                           class="btn btn-warning"
-                           sec:authorize="hasAuthority('ADMIN')">
+                           sec:authorize="hasRole('ADMIN')"
+                           class="btn btn-warning">
                             <i class="fa fa-edit"></i>
                         </a>
 
                         <span class="btn btn-warning disabled"
-                              th:if="${not #authorization.expression('hasAuthority(''ADMIN'')')}"
+                              sec:authorize="!hasRole('ADMIN')"
                               aria-disabled="true">
                             <i class="fa fa-edit"></i>
                         </span>
 
                         <a th:onclick="|confirmDelete(${customer.id})|"
-                           sec:authorize="hasAuthority('ADMIN')"
+                           sec:authorize="hasRole('ADMIN')"
                            class="btn btn-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
 
                         <span class="btn btn-danger disabled"
-                              th:if="${not #authorization.expression('hasAuthority(''ADMIN'')')}"
+                              sec:authorize="!hasRole('ADMIN')"
                               aria-disabled="true">
                             <i class="fa fa-trash"></i>
                          </span>
@@ -155,11 +157,16 @@
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
+                const token = $("meta[name='_csrf']").attr("content");
+                const header = $("meta[name='_csrf_header']").attr("content");
                 const url = /*[[@{/admin/customer/delete/}]]*/ "";
                 $.ajax({
                     type : "POST",
                     url : url + id,
                     contentType: "application/json",
+                    beforeSend: function(request) {
+                        request.setRequestHeader(header, token);
+                    },
                     dataType : 'html',
                     success: function () {
                         Swal.fire({
@@ -168,10 +175,8 @@
                             icon: "success",
                             showConfirmButton: false,
                             timer: 1500
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.reload();
-                            }
+                        }).then(function (){
+                            window.location.reload();
                         })
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -180,7 +185,8 @@
                             title: "Error!",
                             text: "There was an error deleting your customer.",
                             icon: "error",
-                            showConfirmButton: true,
+                            showConfirmButton: false,
+                            timer: 1500
                         });
                     }
                 })

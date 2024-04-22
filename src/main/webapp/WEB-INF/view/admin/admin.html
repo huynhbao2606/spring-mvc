@@ -10,7 +10,7 @@
 <body>
 <main class="row flex-grow-1 p-4 d-flex align-items-center" layout:fragment="content">
     <h2>Username: <span sec:authentication="name"></span></h2>
-    <div sec:authorize="hasAuthority('ADMIN')">
+    <div sec:authorize="hasRole('ADMIN')">
         <h1>Welcome, Admin!</h1>
     </div>
     <div sec:authorize="hasAuthority('MANAGE')">

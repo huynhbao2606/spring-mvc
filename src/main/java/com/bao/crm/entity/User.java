@@ -1,9 +1,12 @@
 package com.bao.crm.entity;
 
 
+import com.bao.crm.validation.VaildEmail;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Entity
@@ -20,18 +23,28 @@ public class User {
     private Integer id;
 
     @Column(name = "username")
-    private String  userName;
+    @NotEmpty(message = "username is required")
+    private String  username;
 
     @Column(name = "password")
-    private String passWord;
+    @NotEmpty(message = "password is required")
+    private String password;
 
     @Column(name = "email")
+    @NotEmpty(message = "email is required")
+    @Email(message = "Email is invalid")
+    @VaildEmail
     private String email;
 
     @Column(name = "enabled")
-    private Boolean enabled;
+    private Boolean enabled = true;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<UserRole> userRoles;
+    @Column(name = "image",length = 45)
+    private String image;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
+    private Set<Role> roles;
 }
