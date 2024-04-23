@@ -9,13 +9,13 @@
 	<id>crm</id>
 
 	<classpath>
-		<dir name="D:/spring-mvc/target/classes">
+		<dir name="D:/Java-Spring/spring-mvc/src/main/resources">
 		</dir>
 	</classpath>
 
 	<web>
 		<link target="/">
-			<dir name="D:/spring-mvc/src/main/webapp">
+			<dir name="D:/Java-Spring/spring-mvc/src/main/webapp">
 			</dir>
 		</link>
 	</web>

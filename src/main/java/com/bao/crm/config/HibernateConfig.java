@@ -16,6 +16,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -64,6 +66,7 @@ public class HibernateConfig implements WebMvcConfigurer{
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
+
         return viewResolver;
     }
 
@@ -103,6 +106,11 @@ public class HibernateConfig implements WebMvcConfigurer{
         return new SpringSecurityDialect();
     }
 
+    @Bean
+    public MultipartResolver multipartResolver(){
+        return new StandardServletMultipartResolver();
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
@@ -115,4 +123,5 @@ public class HibernateConfig implements WebMvcConfigurer{
         hibernateProperties.setProperty("hibernate.show_sql", "true");
         return hibernateProperties;
     }
+
 }

@@ -39,7 +39,7 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled = true;
 
-    @Column(name = "image",length = 45)
+    @Column(name = "image")
     private String image;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

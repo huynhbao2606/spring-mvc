@@ -14,6 +14,7 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -40,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/auth/**", "/images/**").permitAll()
+                .antMatchers("/resources/**", "/auth/**").permitAll()
                 .antMatchers("/admin/**/list","/admin/home").hasAnyRole("MANAGE", "ADMIN")
-                .antMatchers("/admin/**/new/**","/admin/**/edit/**","/admin/**/delete/**").hasRole("ADMIN")
+                .antMatchers("/admin/**/new/**","/admin/**/edit/**","/admin/**/delete/**", "/admin/**/save").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -59,5 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/auth/access-denied");
     }
+
 }
 

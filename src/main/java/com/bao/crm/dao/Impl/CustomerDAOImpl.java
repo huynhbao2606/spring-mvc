@@ -1,5 +1,6 @@
 package com.bao.crm.dao.Impl;
 
+import com.bao.crm.constant.SortCustomer;
 import com.bao.crm.dao.CustomerDAO;
 import com.bao.crm.dto.CustomerParams;
 import com.bao.crm.entity.Customer;
@@ -47,23 +48,23 @@ public class CustomerDAOImpl implements CustomerDAO{
 
         if (sort != null && !sort.isEmpty()) {
             switch (sort) {
-                case "firstNameAsc":
-                    query.orderBy(builder.asc(root.get("firstName")));
+                case SortCustomer.FIRST_NAME_ASC:
+                    query.orderBy(builder.asc(root.get(SortCustomer.FIRST_NAME)));
                     break;
-                case "firstNameDesc":
-                    query.orderBy(builder.desc(root.get("firstName")));
+                case SortCustomer.FIRST_NAME_DESC:
+                    query.orderBy(builder.desc(root.get(SortCustomer.FIRST_NAME)));
                     break;
-                case "lastNameAsc":
-                    query.orderBy(builder.asc(root.get("lastName")));
+                case SortCustomer.LAST_NAME_ASC:
+                    query.orderBy(builder.asc(root.get(SortCustomer.LAST_NAME)));
                     break;
-                case "lastNameDesc":
-                    query.orderBy(builder.desc(root.get("lastName")));
+                case SortCustomer.LAST_NAME_DESC:
+                    query.orderBy(builder.desc(root.get(SortCustomer.LAST_NAME)));
                     break;
-                case "emailAsc":
-                    query.orderBy(builder.asc(root.get("email")));
+                case SortCustomer.EMAIL_ASC:
+                    query.orderBy(builder.asc(root.get(SortCustomer.EMAIL)));
                     break;
-                case "emailDesc":
-                    query.orderBy(builder.desc(root.get("email")));
+                case SortCustomer.EMAIL_DESC:
+                    query.orderBy(builder.desc(root.get(SortCustomer.EMAIL)));
                     break;
                 default:
                     query.orderBy(builder.asc(root.get("id")));
